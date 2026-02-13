@@ -24,6 +24,7 @@ The application:
 - Displays processed output image in the browser
 
 This project showcases:
+
 - Computer Vision fundamentals
 - OpenCV integration in Python
 - Cloud deployment using Streamlit
@@ -35,8 +36,8 @@ This project showcases:
 ## 🏗️ System Architecture
 
 1. User uploads an image via Streamlit UI  
-2. Image is converted to a NumPy array  
-3. Converted to grayscale for better detection  
+2. Image is converted into a NumPy array  
+3. Converted to grayscale for improved detection accuracy  
 4. Haar Cascade classifier scans the image  
 5. Faces are detected using feature-based detection  
 6. Bounding boxes are drawn around detected faces  
@@ -46,7 +47,7 @@ This project showcases:
 
 ## 🛠️ Tech Stack
 
-- Python 3.13
+- Python 3
 - Streamlit (Web UI + Deployment)
 - OpenCV (Computer Vision)
 - NumPy (Image Processing)
@@ -58,13 +59,18 @@ This project showcases:
 
 ## 🔍 Face Detection Method Used
 
-This project uses the **Haar Cascade Classifier**, which:
+This project uses the **Haar Cascade Classifier**, a classical machine learning-based object detection algorithm.
 
-- Is a pre-trained XML model from OpenCV
-- Uses feature-based detection (edges & line detection)
-- Applies a sliding window approach
-- Efficient for static image detection
-- Lightweight and fast compared to deep learning models
+### How it works:
+
+- Uses a pre-trained XML model from OpenCV
+- Detects facial features like edges and line patterns
+- Applies sliding window detection across the image
+- Uses cascade stages to quickly eliminate non-face regions
+- Returns bounding box coordinates of detected faces
+
+Haar Cascade is lightweight and fast for static image detection.  
+While deep learning models provide higher accuracy, Haar Cascade is efficient for quick and simple deployments.
 
 ---
 
@@ -75,21 +81,29 @@ git clone https://github.com/anshikaa3/face-detection-web.git
 cd face-detection-web
 
 python -m venv venv
-venv\Scripts\activate  # On Windows
+venv\Scripts\activate     # On Windows
+# OR
+source venv/bin/activate  # On Mac/Linux
 
 pip install -r requirements.txt
 streamlit run app.py
+```
 
+The app will run at:
+
+```
+http://localhost:8501
+```
 
 ---
 
 ## 🌍 Deployment Details
 
-- Deployed using **Streamlit Cloud**
+- Deployed using Streamlit Cloud
 - Uses `opencv-python-headless` for cloud compatibility
 - Dependencies managed via `requirements.txt`
 - Automatically rebuilds on every GitHub push
-- Runs without GUI (headless OpenCV version)
+- Runs without GUI support in server environment
 
 Live App:
 👉 https://face-detection-web-nh7azu28f5g8qgzfgbmlep.streamlit.app/
@@ -101,22 +115,23 @@ Live App:
 - Upload image from local system
 - Detect multiple faces in a single image
 - Draw bounding boxes around detected faces
-- Display number of faces detected
+- Display total number of faces detected
 - Cloud-hosted and publicly accessible
 
 ---
 
-## 🔍 How Face Detection Works
+## ⚠️ Why opencv-python-headless?
 
-This project uses the **Haar Cascade Classifier**, a classical machine learning-based object detection algorithm.
+Cloud servers do not support GUI rendering.  
+The standard `opencv-python` package depends on GUI libraries which cause errors in cloud environments.
 
-The detection process:
+To resolve this, the project uses:
 
-1. Convert image to grayscale
-2. Apply Haar Cascade sliding window detection
-3. Identify facial features (edges, lines, contrast)
-4. Return bounding box coordinates
-5. Draw rectangles on detected face regions
+```
+opencv-python-headless
+```
+
+This version removes GUI dependencies and works perfectly in headless (server) environments like Streamlit Cloud.
 
 ---
 
@@ -125,9 +140,9 @@ The detection process:
 - Add real-time webcam detection
 - Integrate Face Recognition (LBPH / Deep Learning)
 - Add confidence score display
-- Add downloadable processed image
-- Improve UI design
-- Deploy using Docker
+- Allow downloading processed image
+- Improve UI/UX design
+- Containerize using Docker
 
 ---
 
@@ -136,11 +151,12 @@ The detection process:
 Through this project, I learned:
 
 - Image preprocessing using OpenCV
-- Face detection using Haar Cascade
+- Classical face detection techniques
 - Handling Python virtual environments
 - Cloud deployment challenges
 - Using headless OpenCV for server environments
 - Debugging dependency issues in production
+- Structuring production-ready repositories
 
 ---
 
@@ -150,5 +166,4 @@ Through this project, I learned:
 GitHub: https://github.com/anshikaa3  
 
 ---
-
 
