@@ -79,3 +79,76 @@ venv\Scripts\activate  # On Windows
 
 pip install -r requirements.txt
 streamlit run app.py
+
+
+---
+
+## 🌍 Deployment Details
+
+- Deployed using **Streamlit Cloud**
+- Uses `opencv-python-headless` for cloud compatibility
+- Dependencies managed via `requirements.txt`
+- Automatically rebuilds on every GitHub push
+- Runs without GUI (headless OpenCV version)
+
+Live App:
+👉 https://face-detection-web-nh7azu28f5g8qgzfgbmlep.streamlit.app/
+
+---
+
+## 📊 Features
+
+- Upload image from local system
+- Detect multiple faces in a single image
+- Draw bounding boxes around detected faces
+- Display number of faces detected
+- Cloud-hosted and publicly accessible
+
+---
+
+## 🔍 How Face Detection Works
+
+This project uses the **Haar Cascade Classifier**, a classical machine learning-based object detection algorithm.
+
+The detection process:
+
+1. Convert image to grayscale
+2. Apply Haar Cascade sliding window detection
+3. Identify facial features (edges, lines, contrast)
+4. Return bounding box coordinates
+5. Draw rectangles on detected face regions
+
+---
+
+## 📈 Future Enhancements
+
+- Add real-time webcam detection
+- Integrate Face Recognition (LBPH / Deep Learning)
+- Add confidence score display
+- Add downloadable processed image
+- Improve UI design
+- Deploy using Docker
+
+---
+
+## 🎯 Key Learnings
+
+Through this project, I learned:
+
+- Image preprocessing using OpenCV
+- Face detection using Haar Cascade
+- Handling Python virtual environments
+- Cloud deployment challenges
+- Using headless OpenCV for server environments
+- Debugging dependency issues in production
+
+---
+
+## 👩‍💻 Author
+
+**Anshika Srivastava**  
+GitHub: https://github.com/anshikaa3  
+
+---
+
+
