@@ -38,7 +38,11 @@ if os.path.exists(DATASET_PATH):
 
                 gray_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
-                detected = face_cascade.detectMultiScale(gray_img, 1.3, 5)
+                detected = face_cascade.detectMultiScale(
+                    gray_img,
+                    scaleFactor=1.3,
+                    minNeighbors=6
+                )
 
                 for (x, y, w, h) in detected:
                     face = gray_img[y:y+h, x:x+w]
@@ -48,7 +52,6 @@ if os.path.exists(DATASET_PATH):
 
             current_label += 1
 
-# Show how many faces trained
 st.write("Total trained faces:", len(faces))
 
 # Train recognizer
@@ -72,10 +75,19 @@ if uploaded_file is not None:
 
     detected_faces = face_cascade.detectMultiScale(
         gray,
-        scaleFactor=1.2,
-        minNeighbors=8,
-        minSize=(100, 100)
+        scaleFactor=1.3,
+        minNeighbors=10,
+        minSize=(150, 150)
     )
+
+    # Keep only largest face if multiple detected
+    if len(detected_faces) > 1:
+        detected_faces = sorted(
+            detected_faces,
+            key=lambda x: x[2] * x[3],
+            reverse=True
+        )
+        detected_faces = detected_faces[:1]
 
     for (x, y, w, h) in detected_faces:
 
@@ -85,20 +97,26 @@ if uploaded_file is not None:
         if recognizer is not None:
             label, confidence = recognizer.predict(face_roi)
 
-            # Lower confidence = better match
-            if confidence < 80:
+            # LBPH: lower confidence = better match
+            if confidence < 75:
                 name = label_map.get(label, "Unknown")
             else:
                 name = "Unknown"
 
-            text = f"{name} ({round(confidence,2)})"
+            text = f"{name} | Confidence: {round(confidence,2)}"
         else:
             text = "No trained data"
 
         cv2.rectangle(image, (x, y), (x+w, y+h), (0, 255, 0), 2)
-        cv2.putText(image, text, (x, y-10),
-                    cv2.FONT_HERSHEY_SIMPLEX, 0.8,
-                    (0, 255, 0), 2)
+        cv2.putText(
+            image,
+            text,
+            (x, y-10),
+            cv2.FONT_HERSHEY_SIMPLEX,
+            0.7,
+            (0, 255, 0),
+            2
+        )
 
     st.image(image, channels="BGR")
     st.success(f"Detected {len(detected_faces)} face(s)")
