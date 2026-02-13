@@ -40,11 +40,14 @@ if os.path.exists(DATASET_PATH):
 
                 detected = face_cascade.detectMultiScale(
                     gray_img,
-                    scaleFactor=1.3,
-                    minNeighbors=6
+                    scaleFactor=1.2,
+                    minNeighbors=6,
+                    minSize=(80, 80)
                 )
 
-                for (x, y, w, h) in detected:
+                # Take only first detected face per image
+                if len(detected) > 0:
+                    (x, y, w, h) = detected[0]
                     face = gray_img[y:y+h, x:x+w]
                     face = cv2.resize(face, (200, 200))
                     faces.append(face)
@@ -75,12 +78,12 @@ if uploaded_file is not None:
 
     detected_faces = face_cascade.detectMultiScale(
         gray,
-        scaleFactor=1.3,
-        minNeighbors=10,
-        minSize=(150, 150)
+        scaleFactor=1.2,
+        minNeighbors=8,
+        minSize=(100, 100)
     )
 
-    # Keep only largest face if multiple detected
+    # Keep only largest face (avoid duplicate small boxes)
     if len(detected_faces) > 1:
         detected_faces = sorted(
             detected_faces,
@@ -97,8 +100,8 @@ if uploaded_file is not None:
         if recognizer is not None:
             label, confidence = recognizer.predict(face_roi)
 
-            # LBPH: lower confidence = better match
-            if confidence < 75:
+            # Lower confidence = better match
+            if confidence < 80:
                 name = label_map.get(label, "Unknown")
             else:
                 name = "Unknown"
