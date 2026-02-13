@@ -65,18 +65,20 @@ else:
 uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png"])
 
 if uploaded_file is not None:
+
     file_bytes = np.asarray(bytearray(uploaded_file.read()), dtype=np.uint8)
     image = cv2.imdecode(file_bytes, 1)
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
-detected_faces = face_cascade.detectMultiScale(
-    gray,
-    scaleFactor=1.2,
-    minNeighbors=8,
-    minSize=(100, 100)
-)
+    detected_faces = face_cascade.detectMultiScale(
+        gray,
+        scaleFactor=1.2,
+        minNeighbors=8,
+        minSize=(100, 100)
+    )
 
     for (x, y, w, h) in detected_faces:
+
         face_roi = gray[y:y+h, x:x+w]
         face_roi = cv2.resize(face_roi, (200, 200))
 
