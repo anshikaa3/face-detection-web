@@ -1,7 +1,8 @@
-# 👁️ Face Detection Web App
+# 👁️ Face Detection + Recognition Web App
 
-A cloud-deployed Face Detection Web Application built using **Streamlit and OpenCV**.  
-This application allows users to upload an image and automatically detects human faces using a pre-trained Haar Cascade classifier.
+A cloud-deployed Face Detection and Face Recognition system built using **Streamlit + OpenCV (LBPH)**.
+
+This application allows users to upload an image, detect faces, recognize trained individuals, and display recognition confidence — all directly in the browser.
 
 ---
 
@@ -11,159 +12,162 @@ This application allows users to upload an image and automatically detects human
 
 ---
 
+## 📸 Application Preview
+
+### 🔹 Face Detection
+![Face Detection](assets/detection.png)
+
+### 🔹 Face Recognition
+![Face Recognition](assets/recognition.png)
+
+---
+
 ## 🧠 Project Overview
 
-This project demonstrates how classical computer vision techniques can be integrated into a web application and deployed to the cloud.
+This project demonstrates how classical computer vision techniques can be integrated into a production-ready cloud web application.
 
-The application:
+The system:
 
-- Accepts image uploads from users
-- Converts images to grayscale
-- Detects faces using Haar Cascade Classifier
-- Draws bounding boxes around detected faces
-- Displays processed output image in the browser
-
-This project showcases:
-
-- Computer Vision fundamentals
-- OpenCV integration in Python
-- Cloud deployment using Streamlit
-- Real-time image processing workflow
-- Production-ready dependency handling
+1. Accepts image uploads from users
+2. Converts image to grayscale
+3. Detects faces using Haar Cascade Classifier
+4. Extracts detected face regions
+5. Trains an LBPH Face Recognizer using dataset images
+6. Predicts identity of detected faces
+7. Displays name + confidence score
+8. Shows total trained faces
 
 ---
 
 ## 🏗️ System Architecture
 
-1. User uploads an image via Streamlit UI  
-2. Image is converted into a NumPy array  
-3. Converted to grayscale for improved detection accuracy  
-4. Haar Cascade classifier scans the image  
-5. Faces are detected using feature-based detection  
-6. Bounding boxes are drawn around detected faces  
-7. Final processed image is displayed  
+User → Streamlit UI →  
+Image Processing (NumPy + OpenCV) →  
+Haar Cascade Face Detection →  
+LBPH Face Recognition →  
+Result Display
 
 ---
 
 ## 🛠️ Tech Stack
 
 - Python 3
-- Streamlit (Web UI + Deployment)
-- OpenCV (Computer Vision)
+- Streamlit (Web UI + Cloud Hosting)
+- OpenCV (Face Detection + Recognition)
 - NumPy (Image Processing)
-- Haar Cascade Classifier (Face Detection)
+- Haar Cascade Classifier
+- LBPH (Local Binary Pattern Histogram)
 - Git & GitHub
-- Streamlit Cloud (Hosting)
+- Streamlit Cloud Deployment
 
 ---
 
-## 🔍 Face Detection Method Used
+## 🔍 Face Detection Method
 
-This project uses the **Haar Cascade Classifier**, a classical machine learning-based object detection algorithm.
+This project uses the **Haar Cascade Classifier**:
 
-### How it works:
-
-- Uses a pre-trained XML model from OpenCV
-- Detects facial features like edges and line patterns
-- Applies sliding window detection across the image
-- Uses cascade stages to quickly eliminate non-face regions
-- Returns bounding box coordinates of detected faces
-
-Haar Cascade is lightweight and fast for static image detection.  
-While deep learning models provide higher accuracy, Haar Cascade is efficient for quick and simple deployments.
+- Pre-trained XML model from OpenCV
+- Uses feature-based detection (edges & patterns)
+- Sliding window scanning approach
+- Fast and lightweight
 
 ---
 
-## 📦 Installation (Run Locally)
+## 🔎 Face Recognition Method
+
+This project uses **LBPH (Local Binary Pattern Histogram)**:
+
+- Extracts texture patterns from grayscale face
+- Converts them into histogram features
+- Compares histogram distance for matching
+- Works efficiently for small datasets
+
+### Confidence Score Meaning
+
+- Lower value → Better match
+- Higher value → Less confident match
+- Threshold applied to avoid false recognition
+
+---
+
+## 📂 Dataset Structure
+
+```
+dataset/
+│
+├── person1/
+│   ├── img1.jpg
+│   ├── img2.jpg
+│
+├── person2/
+│   ├── img1.jpg
+│   ├── img2.jpg
+```
+
+Each folder represents one person label.
+
+---
+
+## 📦 Run Locally
 
 ```bash
 git clone https://github.com/anshikaa3/face-detection-web.git
 cd face-detection-web
 
 python -m venv venv
-venv\Scripts\activate     # On Windows
-# OR
-source venv/bin/activate  # On Mac/Linux
+venv\Scripts\activate
 
 pip install -r requirements.txt
 streamlit run app.py
 ```
 
-The app will run at:
-
-```
-http://localhost:8501
-```
+The app will open in your browser automatically.
 
 ---
 
 ## 🌍 Deployment Details
 
-- Deployed using Streamlit Cloud
-- Uses `opencv-python-headless` for cloud compatibility
-- Dependencies managed via `requirements.txt`
-- Automatically rebuilds on every GitHub push
-- Runs without GUI support in server environment
-
-Live App:
-👉 https://face-detection-web-nh7azu28f5g8qgzfgbmlep.streamlit.app/
+- Hosted on Streamlit Cloud
+- Uses opencv-contrib-python-headless
+- Fully cloud compatible (no GUI dependency)
+- Auto-rebuild on every GitHub push
 
 ---
 
 ## 📊 Features
 
-- Upload image from local system
-- Detect multiple faces in a single image
-- Draw bounding boxes around detected faces
-- Display total number of faces detected
-- Cloud-hosted and publicly accessible
+- Detect multiple faces in one image
+- Recognize trained individuals
+- Display confidence score
+- Show total number of trained faces
+- Cloud accessible live demo
+- Lightweight classical computer vision model
 
 ---
 
-## ⚠️ Why opencv-python-headless?
+## 📈 Future Improvements
 
-Cloud servers do not support GUI rendering.  
-The standard `opencv-python` package depends on GUI libraries which cause errors in cloud environments.
-
-To resolve this, the project uses:
-
-```
-opencv-python-headless
-```
-
-This version removes GUI dependencies and works perfectly in headless (server) environments like Streamlit Cloud.
-
----
-
-## 📈 Future Enhancements
-
-- Add real-time webcam detection
-- Integrate Face Recognition (LBPH / Deep Learning)
-- Add confidence score display
-- Allow downloading processed image
-- Improve UI/UX design
-- Containerize using Docker
+- Real-time webcam detection
+- Deep learning model (FaceNet / DNN)
+- Confidence threshold slider
+- User registration system
+- Docker container deployment
 
 ---
 
 ## 🎯 Key Learnings
 
-Through this project, I learned:
-
-- Image preprocessing using OpenCV
-- Classical face detection techniques
-- Handling Python virtual environments
+- Face detection using Haar Cascade
+- Face recognition using LBPH
+- Image preprocessing techniques
+- Dataset preparation for CV models
 - Cloud deployment challenges
-- Using headless OpenCV for server environments
-- Debugging dependency issues in production
-- Structuring production-ready repositories
+- Headless OpenCV usage
+- Git version control best practices
 
 ---
 
 ## 👩‍💻 Author
 
 **Anshika Srivastava**  
-GitHub: https://github.com/anshikaa3  
-
----
-
+GitHub: https://github.com/anshikaa3
