@@ -69,7 +69,12 @@ if uploaded_file is not None:
     image = cv2.imdecode(file_bytes, 1)
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
-    detected_faces = face_cascade.detectMultiScale(gray, 1.3, 5)
+detected_faces = face_cascade.detectMultiScale(
+    gray,
+    scaleFactor=1.2,
+    minNeighbors=8,
+    minSize=(100, 100)
+)
 
     for (x, y, w, h) in detected_faces:
         face_roi = gray[y:y+h, x:x+w]
