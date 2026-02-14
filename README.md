@@ -51,7 +51,7 @@ Result Display
 
 ## 🛠️ Tech Stack
 
-- Python 3
+- Python 
 - Streamlit (Web UI + Cloud Hosting)
 - OpenCV (Face Detection + Recognition)
 - NumPy (Image Processing)
