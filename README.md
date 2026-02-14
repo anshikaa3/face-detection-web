@@ -4,7 +4,7 @@ A cloud-deployed Face Detection and Face Recognition system built using **Stream
 
 This application allows users to upload an image, detect faces, recognize trained individuals, and display recognition confidence — all directly in the browser.
 
----
+--- 
 
 ## 🚀 Live Demo
 
